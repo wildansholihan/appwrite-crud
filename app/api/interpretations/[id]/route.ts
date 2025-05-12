@@ -4,7 +4,7 @@
 import client from "@/lib/appwrite_client";
 import { Databases } from "appwrite";
 import next from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const database = new Databases(client);
 
@@ -47,7 +47,7 @@ async function updateInterpretation(id: string, data: {term: string, interpretat
 }
 
 export async function GET(
-    req: Request,
+    req: NextRequest,
     {params}: {params: {id: string}}
     ) {
         try {
@@ -63,7 +63,7 @@ export async function GET(
 }
 
 export async function DELETE(
-    req: Request,
+    req: NextRequest,
     {params}: {params: {id: string}}
     ) {
         try {
@@ -79,7 +79,7 @@ export async function DELETE(
 }
 
 export async function PUT(
-    req: Request,
+    req: NextRequest,
     {params}: {params: {id: string}}
     ) {
         try {
