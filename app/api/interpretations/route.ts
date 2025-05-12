@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
 import client from "@/lib/appwrite_client";
 import { Databases, ID, Query } from "appwrite";
 import { NextResponse } from "next/server";

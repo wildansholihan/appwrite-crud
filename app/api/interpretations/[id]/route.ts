@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
 import client from "@/lib/appwrite_client";
 import { Databases } from "appwrite";
 import next from "next";
