@@ -6,11 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 const database = new Databases(client);
 
-// Type untuk context route
-type RouteContext = {
-  params: { id: string };
-};
-
 // Ambil satu interpretasi berdasarkan ID
 async function fetchInterpretation(id: string) {
   try {
@@ -58,11 +53,13 @@ async function updateInterpretation(
   }
 }
 
-// GET /api/interpretation/[id]
-export async function GET(req: NextRequest, context: RouteContext) {
+// ✅ GET /api/interpretations/[id]
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const id = context.params.id;
-    const interpretation = await fetchInterpretation(id);
+    const interpretation = await fetchInterpretation(params.id);
     return NextResponse.json({ interpretation });
   } catch (error) {
     return NextResponse.json(
@@ -72,11 +69,13 @@ export async function GET(req: NextRequest, context: RouteContext) {
   }
 }
 
-// DELETE /api/interpretation/[id]
-export async function DELETE(req: NextRequest, context: RouteContext) {
+// ✅ DELETE /api/interpretations/[id]
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const id = context.params.id;
-    await deleteInterpretation(id);
+    await deleteInterpretation(params.id);
     return NextResponse.json({ message: "Interpretation deleted successfully" });
   } catch (error) {
     return NextResponse.json(
@@ -86,12 +85,14 @@ export async function DELETE(req: NextRequest, context: RouteContext) {
   }
 }
 
-// PUT /api/interpretation/[id]
-export async function PUT(req: NextRequest, context: RouteContext) {
+// ✅ PUT /api/interpretations/[id]
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const id = context.params.id;
-    const interpretation = await req.json();
-    await updateInterpretation(id, interpretation);
+    const data = await req.json();
+    await updateInterpretation(params.id, data);
     return NextResponse.json({ message: "Interpretation updated" });
   } catch (error) {
     return NextResponse.json(
