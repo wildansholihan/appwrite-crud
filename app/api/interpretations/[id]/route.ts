@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import client from "@/lib/appwrite_client";
 import { Databases } from "appwrite";
 import { NextRequest, NextResponse } from "next/server";
 
 const database = new Databases(client);
 
-// Ambil satu interpretasi berdasarkan ID
 async function fetchInterpretation(id: string) {
   try {
     const interpretation = await database.getDocument(
@@ -21,7 +18,6 @@ async function fetchInterpretation(id: string) {
   }
 }
 
-// Hapus interpretasi berdasarkan ID
 async function deleteInterpretation(id: string) {
   try {
     await database.deleteDocument(
@@ -35,7 +31,6 @@ async function deleteInterpretation(id: string) {
   }
 }
 
-// Update interpretasi berdasarkan ID dan data baru
 async function updateInterpretation(
   id: string,
   data: { term: string; interpretation: string }
@@ -56,10 +51,10 @@ async function updateInterpretation(
 // ✅ GET /api/interpretations/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params: { id: string } }
 ) {
   try {
-    const interpretation = await fetchInterpretation(params.id);
+    const interpretation = await fetchInterpretation(context.params.id);
     return NextResponse.json({ interpretation });
   } catch (error) {
     return NextResponse.json(
@@ -72,10 +67,10 @@ export async function GET(
 // ✅ DELETE /api/interpretations/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params: { id: string } }
 ) {
   try {
-    await deleteInterpretation(params.id);
+    await deleteInterpretation(context.params.id);
     return NextResponse.json({ message: "Interpretation deleted successfully" });
   } catch (error) {
     return NextResponse.json(
@@ -88,11 +83,11 @@ export async function DELETE(
 // ✅ PUT /api/interpretations/[id]
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params: { id: string } }
 ) {
   try {
     const data = await req.json();
-    await updateInterpretation(params.id, data);
+    await updateInterpretation(context.params.id, data);
     return NextResponse.json({ message: "Interpretation updated" });
   } catch (error) {
     return NextResponse.json(
