@@ -56,7 +56,7 @@ async function updateInterpretation(
 // ✅ GET /api/interpretations/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Record<string, string> }
 ) {
   try {
     const interpretation = await fetchInterpretation(params.id);
@@ -72,7 +72,7 @@ export async function GET(
 // ✅ DELETE /api/interpretations/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Record<string, string> }
 ) {
   try {
     await deleteInterpretation(params.id);
@@ -88,7 +88,7 @@ export async function DELETE(
 // ✅ PUT /api/interpretations/[id]
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Record<string, string> }
 ) {
   try {
     const data = await req.json();
